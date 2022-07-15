@@ -524,6 +524,10 @@ export default class NextNodeServer extends BaseServer {
       let finished = false
 
       proxy.on('proxyReq', (proxyReq) => {
+        if ('host' in req.headers && req.headers.host) {
+          proxyReq.setHeader('host', req.headers.host)
+        }
+
         proxyReq.on('close', () => {
           if (!finished) {
             finished = true
